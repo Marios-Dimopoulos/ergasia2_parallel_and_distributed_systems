@@ -6,68 +6,6 @@
 
 #include "coloringCC_mpi_openmp.h"
 
-/*void coloringCC_mpi_openmp(int nrows, const int *rowptr, const int *index, int *labels, int rank, int size, MPI_Comm comm) {
-
-    int chunk_size = (nrows+size-1)/size;
-    int start_ = rank*chunk_size;
-    int end_ = (start_+chunk_size>nrows) ? nrows : start_+chunk_size;
-
-    int *reduced = malloc(nrows*sizeof(int));
-    if (!reduced) {
-        printf("Memory allocation failed\n");
-        return;
-    }
-
-    int *old_labels = malloc(nrows * sizeof(int));
-    int *new_labels = malloc(nrows * sizeof(int));
-    if (!old_labels || !new_labels) {
-        free(old_labels); free(new_labels);
-        return;
-    }   
-
-    omp_set_num_threads(NUM_OF_THREADS);
-
-    #pragma omp parallel for schedule(static)
-    for (int i=0; i<nrows; i++) {
-        old_labels[i] = i;
-        new_labels[i] = i;
-    }
-
-    int global_changed = 1;
-   
-    while (global_changed) {
-        
-        int local_changed = 0;
-
-        #pragma omp parallel for schedule(static) //schedule(dynamic, ...)
-        for (int v=start_; v<end_; v++){
-            int start = rowptr[v];
-            int end = rowptr[v+1];
-            int lv = old_labels[v];
-            for (int j=start; j<end; j++) {
-                int u = index[j];
-                int lu = old_labels[u];
-                if (lu<lv) lv = lu;
-            }
-
-            new_labels[v] = lv;
-
-            if (lv != old_labels[v]) local_changed = 1;
-        }
-        int *tmp = old_labels;
-        old_labels = new_labels;
-        new_labels = tmp;
-
-        MPI_Allreduce(old_labels, reduced, nrows, MPI_INT, MPI_MIN, comm);
-
-        memcpy(old_labels, reduced, nrows * sizeof(int));
-
-        MPI_Allreduce(&local_changed, &global_changed, 1, MPI_INT, MPI_LOR, comm);
-    }
-    memcpy(labels, old_labels, nrows * sizeof(int));
-    free(old_labels); free(new_labels);free(reduced);
-}*/
-
 void coloringCC_mpi_openmp(int nrows, const int *rowptr, const int *index, int *labels, int rank, int size, MPI_Comm comm) {
 
     int chunk_size = (nrows+size-1)/size;
