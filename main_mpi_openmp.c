@@ -6,122 +6,6 @@
 
 #include "coloringCC_mpi_openmp.h"
 
-
-/*int main(int argc, char* argv[]){
-
-    struct timeval start;
-    struct timeval end;
-    
-    if (argc < 2) {
-    printf("Usage: %s <edges_file>\n", argv[0]);
-    return 1;
-    }
-
-    FILE *f = fopen(argv[1], "r");
-    if (!f) { 
-        printf("Cannot open file %s\n", argv[1]); 
-        return 1;
-    }
-    
-    int nnz = 0;
-    int r,c;
-    int max_row = -1;
-
-    //first pass: count edges and find maximum row index
-    while (fscanf(f, "%d %d", &r, &c) == 2) {
-        nnz++;
-        if (r > max_row) {
-            max_row = r;
-        }
-    }
-    rewind(f);
-
-    int nrows = max_row ; // 0-based indices
-
-    //Allocate arrays to store COO
-    int *row = malloc(nnz*sizeof(int));
-    int *col = malloc(nnz*sizeof(int));
-    if (!row || !col) {
-        printf("Memory allocation failed\n");
-        fclose(f);
-        free(row); free(col);
-        return 1;
-    }
-
-    //Read edges into arrays
-    int idx = 0;
-    while (fscanf(f, "%d %d", &r, &c) == 2) {
-        row[idx] = r-1; //keep 0-based
-        col[idx] = c-1;
-        idx++;
-    }
-    fclose(f);
-
-    //Build CSR structure
-    int *rowptr = calloc(nrows+1, sizeof(int));  
-     if (!rowptr) {
-        printf("Memory allocation failed\n");
-        free(row); free(col);
-        return 1;
-    }
-
-    for (int i=0; i<nnz; i++) rowptr[row[i] + 1]++; 
-    for (int i=1; i<=nrows; i++) rowptr[i] += rowptr[i-1];
-
-
-    int *index = malloc(nnz * sizeof(int));
-    int *temp = malloc((nrows)*sizeof(int));
-    for (int i=0; i<nrows; i++) temp[i] = rowptr[i];
-
-    for (int i=0; i<nnz; i++) {
-        int r = row[i]; 
-        int dest = temp[r]++;
-        index[dest] = col[i];
-    }
-
-
-    free(row); free(col); free(temp);
-
-    int rank, size;
-    MPI_Comm comm = MPI_COMM_WORLD;
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank(comm, &rank);
-    MPI_Comm_size(comm, &size);
-    
-    int *labels = malloc(nrows*sizeof(int));
-    if (!labels) {
-        printf("Memory allocation failed\n");
-        free(rowptr); free(index);
-        return 1;
-    }
-
-    if (rank==0){
-        int results[nrows];
-    }
-
-    gettimeofday(&start, NULL);
-    coloringCC_mpi_openmp(nrows, rowptr, index, labels, rank, size, MPI_COMM_WORLD);
-    gettimeofday(&end, NULL);
-
-    if (rank==0){
-        double elapsed = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec)/1e6;
-        printf("Execution time: %f seconds\n", elapsed);
-        fflush(stdout);
-
-        printf("Global Labels Vector Assembled on Rank 0:\n");
-        fflush(stdout);
-        for (int i=0; i<nrows; i++){
-            if (labels[i]!=0){
-            printf("wrong");
-            fflush(stdout);
-            }
-        }
-    }
-    free(index);free(rowptr);free(labels);
-    MPI_Finalize();
-}
-*/
-
 int main(int argc, char* argv[]) {
 
     struct timeval start;
@@ -257,10 +141,7 @@ int main(int argc, char* argv[]) {
         /*printf("Global Labels Vector Assembled on Rank 0:\n");
         fflush(stdout);
         for (int i=0; i<nrows; i++){
-            if (labels[i]!=0){
-                printf("wrong");
-                fflush(stdout);
-            }
+            printf("%d ", labels[i]);
         }*/
     }
     free(index);free(rowptr);
