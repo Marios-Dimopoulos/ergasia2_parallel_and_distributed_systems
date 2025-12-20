@@ -1,0 +1,9 @@
+rm -f mpi_omp
+mpicc -march=native -O2  -I/home/d/dimopoul/local/matio/include -I/home/d/dimopoul/local/hdf5/include -I/home/d/dimopoul/local/zlib/include -fopenmp main_mpi_openmp.c coloringCC_mpi_openmp.c -L/home/d/dimopoul/local/matio/lib -L/home/d/dimopoul/local/hdf5/lib -L/home/d/dimopoul/local/zlib/lib -lmatio -lhdf5 -lz -lm -o mpi_omp
+Job ID: 2230451
+Running on node: cn[43-44]
+Number of tasks: 8
+CPUs per task: 32
+Copying /home/d/dimopoul/ergasia2_parallhla/ergasia1_source_code/matrices/mawi_201512020330.mat to /scratch/d/dimopoul/2230451/mawi_201512020330.mat...
+Staging completed. Starting MPI OpenMP program...
+Execution time: 5.416878 seconds

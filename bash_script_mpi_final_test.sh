@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=my_mpi_final_test_job
-#SBATCH --output=job_%j.out
-#SBATCH --error=job_%j.err
+#SBATCH --output=job_mawi_K_4_tasks_4.out
 #SBATCH --partition=rome
 #SBATCH --nodes=2
 #SBATCH --cpus-per-task=64
@@ -21,7 +20,7 @@ make clean && make mpi_omp
 
 export LD_LIBRARY_PATH=$HOME/local/matio/lib:$HOME/local/hdf5/lib:$HOME/local/zlib/lib:$LD_LIBRARY_PATH
 
-INPUT_FILE_NAME="kmer_V1r.mat"
+INPUT_FILE_NAME="mawi_201512020330.mat"
 SOURCE_FILE="$HOME/ergasia2_parallhla/ergasia1_source_code/matrices/$INPUT_FILE_NAME"
 JOB_WORKING_DIR="/scratch/d/dimopoul/$SLURM_JOB_ID"
 
@@ -47,5 +46,5 @@ echo "Staging completed. Starting MPI OpenMP program..."
 
 cd "$JOB_WORKING_DIR"
 
-srun ./mpi_omp "$JOB_WORKING_DIR/$INPUT_FILE_NAME"
+mpiexec -n $SLURM_NTASKS ./mpi_omp "$JOB_WORKING_DIR/$INPUT_FILE_NAME"
 rm -rf "$JOB_WORKING_DIR"

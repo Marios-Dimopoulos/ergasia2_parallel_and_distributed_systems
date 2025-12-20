@@ -66,7 +66,6 @@ void coloringCC_mpi_openmp(int nrows, const int *rowptr, const int *index, int *
                 ghost_lists[owner][ghost_counts[owner]++] = u;
             }
         }
-          
     }  
     free(seen);
 
@@ -166,7 +165,7 @@ void coloringCC_mpi_openmp(int nrows, const int *rowptr, const int *index, int *
     
     int global_changed = 1;
     int local_changed;
-    int K = 6;
+    int K = 16;
    
     while (global_changed) {
         
