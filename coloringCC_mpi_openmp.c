@@ -165,7 +165,7 @@ void coloringCC_mpi_openmp(int nrows, const int *rowptr, const int *index, int *
     
     int global_changed = 1;
     int local_changed;
-    int K = 16;
+    int K = 4;
    
     while (global_changed) {
         

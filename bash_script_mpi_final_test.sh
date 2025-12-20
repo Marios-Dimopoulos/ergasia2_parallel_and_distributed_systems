@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=my_mpi_final_test_job
-#SBATCH --output=job_mawi_K_4_tasks_4.out
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
 #SBATCH --partition=rome
 #SBATCH --nodes=2
-#SBATCH --cpus-per-task=64
-#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=128
+#SBATCH --ntasks=2
 #SBATCH --mem=100G
 #SBATCH --time=00:05:00
-#SBATCH --ntasks-per-node=2
+#SBATCH --ntasks-per-node=1
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export UCX_WARN_UNUSED_ENV_VARS=n 
 

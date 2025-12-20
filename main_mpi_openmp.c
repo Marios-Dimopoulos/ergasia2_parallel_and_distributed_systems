@@ -11,12 +11,6 @@ int main(int argc, char* argv[]) {
     struct timeval start;
     struct timeval end;
 
-    int rank, size;
-    MPI_Comm comm = MPI_COMM_WORLD;
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank(comm, &rank);
-    MPI_Comm_size(comm, &size);
-
     if (argc < 2) {
         printf("Usage: %s <mat_file>\n", argv[0]);
         return 1;
@@ -120,6 +114,12 @@ int main(int argc, char* argv[]) {
     Mat_Close(matfp);
     free(temp_rowptr);
     Mat_VarFree(top_level_var);
+
+    int rank, size;
+    MPI_Comm comm = MPI_COMM_WORLD;
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(comm, &rank);
+    MPI_Comm_size(comm, &size);
     
     int *labels = malloc(nrows*sizeof(int));
     if (!labels) {
