@@ -12,7 +12,6 @@
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export UCX_WARN_UNUSED_ENV_VARS=n 
 
-
 module purge
 module load gcc
 module load openmpi
@@ -22,7 +21,7 @@ make clean && make mpi_omp
 export LD_LIBRARY_PATH=$HOME/local/matio/lib:$HOME/local/hdf5/lib:$HOME/local/zlib/lib:$LD_LIBRARY_PATH
 
 INPUT_FILE_NAME="mawi_201512020330.mat"
-SOURCE_FILE="$HOME/ergasia2_parallhla/ergasia1_source_code/matrices/$INPUT_FILE_NAME"
+SOURCE_FILE="$HOME/ergasia2_parallhla/ergasia2_source_code/matrices/$INPUT_FILE_NAME"
 JOB_WORKING_DIR="/scratch/d/dimopoul/$SLURM_JOB_ID"
 
 mkdir -p "$JOB_WORKING_DIR"
